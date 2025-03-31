@@ -1,5 +1,6 @@
 package com.example.HotelFivePlusBackedJava.controller;
 
+import com.example.HotelFivePlusBackedJava.dto.LoginRequest;
 import com.example.HotelFivePlusBackedJava.dto.Response;
 import com.example.HotelFivePlusBackedJava.entity.User;
 import com.example.HotelFivePlusBackedJava.service.interfaces.IUserService;
@@ -12,18 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
-
-    private IUserService userService;
+    private final IUserService userService;
 
     @PostMapping("/api/auth/register")
-    private ResponseEntity<Response>register(@RequestBody User user) {
+    public ResponseEntity<Response> register(@RequestBody User user) {
         Response response = userService.register(user);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
     @PostMapping("/api/auth/login")
-    private ResponseEntity<Response>login(@RequestBody User user) {
-        Response response = userService.register(user);
+    public ResponseEntity<Response> login(@RequestBody LoginRequest loginRequest) {
+        Response response = userService.login(loginRequest);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 }
